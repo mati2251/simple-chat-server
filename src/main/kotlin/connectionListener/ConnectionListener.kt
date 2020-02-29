@@ -1,14 +1,14 @@
-package ConnectionListener
+package connectionListener
 
-import connection.Connection
 import server.Server
+import connection.Connection
 import java.io.IOException
 import java.net.ServerSocket
 
 
 class ConnectionListener(private val server: Server) : Runnable {
 
-    private var socket: ServerSocket = Server.getSocket()
+    private var socket: ServerSocket = server.socket
     var isRunning = false
         private set
     private lateinit var thread: Thread
@@ -24,7 +24,7 @@ class ConnectionListener(private val server: Server) : Runnable {
     @Synchronized
     fun stop() {
         if (!isRunning) return
-        print("Stop connection on :" + socket.localSocketAddress + "...")
+        print("Stop connection on :" + socket.localSocketAddress)
         isRunning = false
         try {
             socket.close()

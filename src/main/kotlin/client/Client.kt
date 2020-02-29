@@ -6,6 +6,7 @@ class Client(private val connection: Connection, private val clientLists: List<C
 
     private lateinit var thread: Thread
     private var alive = false
+    private lateinit var nick: String
 
     @Synchronized
     fun startSession() {
@@ -29,12 +30,21 @@ class Client(private val connection: Connection, private val clientLists: List<C
 
     override fun run() {
         while (connection.alive) {
-            val reader = connection.getMessage()
+            val reader: String? = connection.getMessage()
             if (reader != null) {
-                println(reader)
-                TODO("Implements send only to people who need is")
-                for(client in clientLists){
-                    client.send(reader)
+                println(reader.split("?")[0])
+                if (reader.split("?")[0] == "NICK") {
+                    println("WORK")
+                    nick = reader.split(":")[1].toString()
+                    for (client in clientLists) {
+                        client.send("MSG=WELCOME USER: $nick")
+                    }
+                } else {
+                    println(reader)
+                    //TODO("Implements send only to people who need is")
+                    for (client in clientLists) {
+                        client.send(reader)
+                    }
                 }
             }
         }

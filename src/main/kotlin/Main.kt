@@ -21,8 +21,9 @@ fun main(args: Array<String>) {
             }
         }
     }
-    if(port in 1..65535){
+    if (port in 1..65535) {
         val server = Server(port)
+        server.start()
     }
 }
 
