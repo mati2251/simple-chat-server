@@ -1,16 +1,12 @@
-package server
-
-import java.io.*
+import ConnectionListener.ConnectionListener
+import client.Client
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 import java.net.ServerSocket
-import java.net.Socket
+import java.util.*
+
 
 class Server(port: Int) {
-    private val serverSocket = ServerSocket(port)
 
-    init {
-        val socket: Socket = serverSocket.accept()
-        val inFromClient = BufferedReader(InputStreamReader(socket.getInputStream()))
-        val outFromClient = DataOutputStream(socket.getOutputStream())
-        println(inFromClient.readLine())
-    }
 }
