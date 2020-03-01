@@ -32,18 +32,29 @@ class Client(private val connection: Connection, private val clientLists: List<C
         while (connection.alive) {
             val reader: String? = connection.getMessage()
             if (reader != null) {
-                println(reader.split("?")[0])
-                if (reader.split("?")[0] == "NICK") {
-                    println("WORK")
-                    nick = reader.split(":")[1].toString()
+                val type = reader.split("?")
+                if (type[0] == "nick") {
+                    nick = type[1]
                     for (client in clientLists) {
-                        client.send("MSG=WELCOME USER: $nick")
+                        client.send("WELCOME USER: $nick")
                     }
-                } else {
-                    println(reader)
-                    //TODO("Implements send only to people who need is")
-                    for (client in clientLists) {
-                        client.send(reader)
+                } else if(type[0] == "msg"){
+                    val props = type[1].split("&")
+                    val propsMap = mutableMapOf<String, String>()
+                    propsMap["text"] = ""
+                    props.forEach{ propsMap[it.split("=")[0]] = it.split("=")[1]}
+                    if(propsMap["to"] == "all" || propsMap["to"].isNullOrEmpty()) {
+                        for (client in clientLists) {
+                            client.send("$nick: ${propsMap["text"]}")
+                        }
+                    }
+                    else{
+                        val toUsers: List<String> = propsMap["to"]!!.split(",")
+                        for (client in clientLists) {
+                            if(toUsers.contains(client.nick)){
+                                client.send("$nick: ${propsMap["text"]}")
+                            }
+                        }
                     }
                 }
             }

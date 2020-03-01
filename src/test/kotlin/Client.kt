@@ -4,7 +4,7 @@ import java.net.Socket
 
 fun main(args: Array<String>) {
     val host: String = "localhost"
-    val port: Int = 8000
+    val port: Int = 1025
     try {
         Socket(host, port).use { socket ->
             BufferedReader(InputStreamReader(socket.getInputStream())).use { `in` ->
@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
                         try {
                             while (stdIn.readLine().also { msg = it } != null) {
                                 for (i in 0 until msg.length) print("\b")
-                                out.write("$userName: $msg\n")
+                                out.write("$msg\n")
                                 out.flush()
                             }
                         } catch (e: Exception) {

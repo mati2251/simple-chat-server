@@ -22,10 +22,6 @@ class Server(port: Int) {
             if(input == "close"){
                 break
             } else{
-                for (i in 0..input.length){
-                    println("\b")
-                }
-                println("Admin: $input")
                 for (c in userList) {
                     c.send("Admin: $input")
                 }
@@ -36,6 +32,7 @@ class Server(port: Int) {
 
     private fun stop() {
         connectionListener.stop()
+        socket.close()
         for (c in userList) {
             c.closeSession()
         }

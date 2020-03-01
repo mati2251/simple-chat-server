@@ -2,7 +2,7 @@ import server.Server
 import java.lang.NumberFormatException
 
 fun main(args: Array<String>) {
-    var port: Int = 8000;
+    var port: Int = 1025;
     if (args.any { it == "--help" }) {
         displayHelp()
     } else {
