@@ -38,7 +38,7 @@ class Client(private val connection: Connection, private val clientLists: List<C
                     for (client in clientLists) {
                         client.send("WELCOME USER: $nick")
                     }
-                } else if(type[0] == "msg"){
+                } else if(type[0] == "msg" && nick.isNotEmpty()){
                     val props = type[1].split("&")
                     val propsMap = mutableMapOf<String, String>()
                     propsMap["text"] = ""
@@ -53,9 +53,16 @@ class Client(private val connection: Connection, private val clientLists: List<C
                         for (client in clientLists) {
                             if(toUsers.contains(client.nick)){
                                 client.send("$nick: ${propsMap["text"]}")
+                                this.send("$nick: ${propsMap["text"]}")
                             }
                         }
                     }
+                }
+                else if(nick.isEmpty()){
+                 this.send("You don't have nick. You must assign it by command \"nick?yournickname\"")
+                }
+                else{
+                    this.send("Bad request")
                 }
             }
         }
