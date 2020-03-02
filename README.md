@@ -12,6 +12,12 @@ Your jar file exist in build/libs directory
 ### Download from release
 [Link to download](https://github.com/mati2251/simple-chat-server/releases)
 ## Usage
+### Connect to server
+Default port is 1025 and host is localhost. To send message use [TCP protocol](https://tools.ietf.org/html/rfc793) <br/>
+Command has argument: <br/>
+`-p`       to change port number <br/>
+`--help`   to display help
+### Request to server
 You can send two type request. <br>
 If you want use chat. You must assign nick by request <br/>
 ``nick?yournickname`` <br/>
