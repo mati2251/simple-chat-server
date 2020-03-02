@@ -19,5 +19,7 @@ After that you can send message <br/>
 ``msg?to=nick,nick2&text=your message`` <br/>
 to - nicks other user separate by `,` or if you want send msg to all user you will use `to=all` <br/>
 text - your message
+## Example of client
+Example of client located in `test/kotlin/client.kt`
 ## License
 GNU General Public License v3.0
